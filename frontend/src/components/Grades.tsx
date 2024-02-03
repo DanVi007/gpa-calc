@@ -5,6 +5,7 @@ import { Grade } from "../models/Grade";
 
 export default function Grades() {
   const testGrade1: Grade = {
+    Id: "TEST",
     Course: "Global",
     Points: 200,
     Grade: 3,
@@ -14,12 +15,13 @@ export default function Grades() {
 
   function displayGrades() {
     return grades.map((grade, index) => (
-      <SingleGrade grade={grade} index={index} grades={grades} setGrades={setGrades} />
+      <SingleGrade grade={grade} index={index} grades={grades} setGrades={setGrades} key={grade.Id} />
     ));
   }
 
   function addEmptyGrade() {
     const emptyGrade: Grade = {
+      Id: String(grades.length),
       Course: "",
       Points: "",
       Grade: '',
