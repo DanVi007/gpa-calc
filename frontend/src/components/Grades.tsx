@@ -14,7 +14,7 @@ export default function Grades() {
 
   function displayGrades() {
     return grades.map((grade, index) => (
-      <SingleGrade grade={grade} index={index} setGrades={setGrades} />
+      <SingleGrade grade={grade} index={index} grades={grades} setGrades={setGrades} />
     ));
   }
 
