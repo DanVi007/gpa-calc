@@ -19,11 +19,10 @@ export default function Grades() {
   }
 
   function addEmptyGrade() {
-    // HACK: seems a bit hacky way to represent empty grades
     const emptyGrade: Grade = {
       Course: "",
-      Points: -1,
-      Grade: -1,
+      Points: "",
+      Grade: '',
     };
     setGrades([...grades, emptyGrade]);
   }

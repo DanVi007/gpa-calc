@@ -14,28 +14,14 @@ export default function SingleGrade({
   }
 
   function handlePointsChange(event: ChangeEvent<HTMLInputElement>): void {
-    const points: number = parseInt(event.target.value);
-    if (!Number.isNaN(points)) {
-      setNewGrade({ ...newGrade, Points: points });
+    const inputValue = event.target.value === '' ? '' : parseInt(event.target.value);
+    if (!Number.isNaN(inputValue)) {
+      setNewGrade({ ...newGrade, Points: inputValue });
     }
   }
 
-  // can probably use charCodeAt, but this is more safe and less hacky.
-  // this uses more memory though..
-  const gradeLetterToNumberMap = new Map<string, number>([
-    ["a", 5],
-    ["b", 4],
-    ["c", 3],
-    ["d", 2],
-    ["e", 1],
-    ["f", 0],
-  ]);
-
   function handleChangeGrades(event: ChangeEvent<HTMLInputElement>): void {
-    const numberGrade = gradeLetterToNumberMap.get(event.target.value);
-    if (numberGrade !== undefined) {
-      setNewGrade({ ...newGrade, Grade: numberGrade });
-    }
+    setNewGrade({ ...newGrade, Grade: event.target.value })
   }
 
   return (
