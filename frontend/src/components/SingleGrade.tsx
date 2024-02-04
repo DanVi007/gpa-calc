@@ -2,6 +2,7 @@ import { Grade } from "../models/Grade";
 import "./SingleGrade.css";
 import { ChangeEvent, useState } from "react";
 
+// TODO: SYTLE
 export default function SingleGrade({
   grade,
   index,
@@ -44,8 +45,15 @@ export default function SingleGrade({
     updateGradesWithNewGrade(updatedGrade);
   }
 
+  // TODO: RENAME BOX TO GRADE
+  function removeGrade(event: React.MouseEvent<HTMLElement>): void {
+    // remove from list also removes from html
+    setGrades(grades.filter(g => g.Id !== grade.Id));
+  }
+
   return (
     <div className="box">
+      <button type="button" onClick={removeGrade}>Remove</button>
       <form>
         <label>
           Emnenavn:
