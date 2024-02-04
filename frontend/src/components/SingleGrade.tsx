@@ -10,17 +10,10 @@ export default function SingleGrade({
 }: { grade: Grade; index: number; grades: Grade[]; setGrades: (value: Grade[]) => void }) {
   const [newGrade, setNewGrade] = useState<Grade>(grade);
 
-  // TODO: add error message 
-  function updateGradesWithNewGrade() {
-    // Validate newGrade
-    if (Number.isNaN(newGrade.Points) || newGrade.Points === '') {
-      return
-    }
-
-    // valid newGrade can be set to storage
+  function updateGradesWithNewGrade(updatedGrade: Grade) {
     const updatedGrades = grades.map((oldGrade, i) => {
       if (i === index) {
-        return newGrade;
+        return updatedGrade
       } else {
         return oldGrade;
       }
@@ -31,21 +24,24 @@ export default function SingleGrade({
 
   // TODO: add error message on all invalid on change
   function handleCourseChange(event: ChangeEvent<HTMLInputElement>): void {
-    setNewGrade({ ...newGrade, Course: event.target.value });
-    updateGradesWithNewGrade();
+    const updatedGrade = { ...newGrade, Course: event.target.value }
+    setNewGrade(updatedGrade);
+    updateGradesWithNewGrade(updatedGrade);
   }
 
   function handlePointsChange(event: ChangeEvent<HTMLInputElement>): void {
     const inputValue = event.target.value === '' ? '' : parseInt(event.target.value);
-    if (!Number.isNaN(inputValue)) {
-      setNewGrade({ ...newGrade, Points: inputValue });
+    if (!Number.isNaN(inputValue) || inputValue === '') {
+      const updatedGrade: Grade = { ...newGrade, Points: inputValue }
+      setNewGrade(updatedGrade)
+      updateGradesWithNewGrade(updatedGrade);
     }
-    updateGradesWithNewGrade();
   }
 
   function handleChangeGrades(event: ChangeEvent<HTMLInputElement>): void {
-    setNewGrade({ ...newGrade, Grade: event.target.value })
-    updateGradesWithNewGrade();
+    const updatedGrade: Grade = { ...newGrade, Grade: event.target.value }
+    setNewGrade(updatedGrade)
+    updateGradesWithNewGrade(updatedGrade);
   }
 
   return (
