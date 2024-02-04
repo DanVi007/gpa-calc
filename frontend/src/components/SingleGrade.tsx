@@ -38,7 +38,8 @@ export default function SingleGrade({
 
   // TODO: add error message on all invalid on change
   function handleChangeGrades(event: ChangeEvent<HTMLInputElement>): void {
-    const updatedGrade: Grade = { ...newGrade, Grade: event.target.value }
+    const gradeWithoutEmptySpaces = event.target.value.replace(/\s+/g, '')
+    const updatedGrade: Grade = { ...newGrade, Grade: gradeWithoutEmptySpaces }
     setNewGrade(updatedGrade)
     updateGradesWithNewGrade(updatedGrade);
   }
