@@ -21,8 +21,6 @@ export default function SingleGrade({
     setGrades(updatedGrades);
   }
 
-
-  // TODO: add error message on all invalid on change
   function handleCourseChange(event: ChangeEvent<HTMLInputElement>): void {
     const updatedGrade = { ...newGrade, Course: event.target.value }
     setNewGrade(updatedGrade);
@@ -38,6 +36,7 @@ export default function SingleGrade({
     }
   }
 
+  // TODO: add error message on all invalid on change
   function handleChangeGrades(event: ChangeEvent<HTMLInputElement>): void {
     const updatedGrade: Grade = { ...newGrade, Grade: event.target.value }
     setNewGrade(updatedGrade)
