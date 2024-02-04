@@ -2,11 +2,11 @@ import SingleGrade from "./SingleGrade";
 import "./Grades.css";
 import { useEffect, useState } from "react";
 import { Grade } from "../models/Grade";
-import { resolveTypeReferenceDirective } from "typescript";
 
 export default function Grades() {
 
   const [grades, setGrades] = useState<Grade[]>();
+  // TODO: make functionality to set new scenario
   const [currentScenario, setCurrentScenario] = useState<string>("initial")
 
   function addEmptyGrade() {
