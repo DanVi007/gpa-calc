@@ -41,14 +41,13 @@ export default function SingleGrade({
     updateGradesWithNewGrade(updatedGrade);
   }
 
-  // TODO: RENAME BOX TO GRADE
   function removeGrade(): void {
     // remove from list also removes from html
     setGrades(grades.filter(g => g.Id !== grade.Id));
   }
 
   return (
-    <div className="box">
+    <div className="grade">
       <button type="button" onClick={removeGrade}>Remove</button>
       <form>
         <label>
