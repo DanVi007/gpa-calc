@@ -37,7 +37,7 @@ export default function SingleGrade({
   // TODO: add error message on all invalid on change
   function handleChangeGrades(event: ChangeEvent<HTMLInputElement>): void {
     const gradeWithoutEmptySpaces = event.target.value.replace(/\s+/g, '')
-    const updatedGrade: Grade = { ...grade, Grade: gradeWithoutEmptySpaces }
+    const updatedGrade: Grade = { ...grade, GradePoint: gradeWithoutEmptySpaces }
     updateGradesWithNewGrade(updatedGrade);
   }
 
@@ -74,7 +74,7 @@ export default function SingleGrade({
           Karakter:
           <input
             type="text"
-            value={grade.Grade}
+            value={grade.GradePoint}
             onChange={handleChangeGrades}
           />
         </label>

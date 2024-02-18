@@ -16,7 +16,7 @@ export default function Grades() {
       Id: String(newId),
       Course: "",
       Points: "",
-      Grade: '',
+      GradePoint: '',
     };
     if (grades) {
       setGrades([...grades, emptyGrade]);
@@ -36,24 +36,42 @@ export default function Grades() {
     }
   }
 
-  // HACK:  A bit hacky find a better way
-  const validGrades: (number | string)[] = [0, 1, 2, 3, 4, 5, "a", "b", "c", "d", "e", "f", "A", "B", "C", "D", "E", "F", "0", "1", "2", "3", "4", "5"]
-  // NOTE: can probably use charCodeAt, but this is more safe and less hacky.
-  // this uses more memory though..
-  const gradeLetterToNumberMap = new Map<string, number>([
-    ["a", 5],
-    ["b", 4],
-    ["c", 3],
-    ["d", 2],
-    ["e", 1],
-    ["f", 0],
-    ["5", 5],
-    ["4", 4],
-    ["3", 3],
-    ["2", 2],
-    ["1", 1],
-    ["0", 0],
-  ]);
+
+
+  /**
+    * Validates gradePoint, throws Error if grade is not valid
+    * @throws {Error}
+    */
+  function validateGradePoints(gradePoint: number | string): number {
+    // returns if valid number
+    let gradePointNum = Number(gradePoint);
+    if (!isNaN(gradePointNum) && gradePointNum >= 0 && gradePointNum <= 5) {
+      return gradePointNum;
+    }
+
+    // check if it is a letter and returns if valid
+    // NOTE: can probably use charCodeAt, but this is more safe and less hacky.
+    // this uses more memory though..
+    const gradeLetterToNumberMap = new Map<string, number>([
+      ["a", 5],
+      ["b", 4],
+      ["c", 3],
+      ["d", 2],
+      ["e", 1],
+      ["f", 0],
+    ]);
+
+    if (typeof gradePoint === "string") {
+      let gradeNumber: number | undefined = gradeLetterToNumberMap.get(gradePoint.toLowerCase())
+      if (typeof gradeNumber === "number") {
+        return gradeNumber
+      }
+    }
+
+    throw new Error("GradePoint is not valid")
+  }
+
+
   function calculateGpa() {
     if (!grades) {
       setGpa("0")
@@ -62,25 +80,31 @@ export default function Grades() {
 
     let gradePoints = 0
     let totalStudyPoints = 0
+    let valid = true
 
-    for (let i = 0; i < grades.length; i++) {
+    for (let i = 0; i < grades.length && valid; i++) {
       const grade = grades[i]
-      if (validGrades.includes(grade.Grade) && grade.Points !== '') {
-        if (typeof grade.Grade === "string") {
-          let gradeNumber = gradeLetterToNumberMap.get(grade.Grade.toLowerCase()) || 0
-          gradePoints += gradeNumber * grade.Points
-        } else {
-          gradePoints += grade.Grade * grade.Points
-        }
-        totalStudyPoints += grade.Points
-      } else {
-        // TODO: give proper error message 
-        console.error("Grade not valid, please set valid grade")
-        return
+      if (grade.Points === '') {
+        console.error("Study points is not set")
+        valid = false
+        break
+      }
+
+      try {
+        gradePoints += validateGradePoints(grade.GradePoint) * grade.Points;
+        totalStudyPoints += grade.Points;
+      } catch (error) {
+        console.error(error)
+        valid = false
       }
     }
-    // TODO: FIX ROUNDING AND CHECK HOW UNIVERSITIES ROUND
-    setGpa(String(gradePoints / totalStudyPoints))
+    // TODO: ROUND AND CHECK HOW UNIVERSITIES ROUND
+    if (valid) {
+      setGpa(String(gradePoints / totalStudyPoints))
+    } else {
+      console.error("There are some invalid fields")
+      setGpa('')
+    }
   }
 
   useEffect(
