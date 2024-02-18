@@ -1,15 +1,14 @@
 import { Grade } from "../models/Grade";
 import "./SingleGrade.css";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent } from "react";
 
-// TODO: SYTLE
+// TODO: style
 export default function SingleGrade({
   grade,
   index,
   grades,
   setGrades,
 }: { grade: Grade; index: number; grades: Grade[]; setGrades: (value: Grade[]) => void }) {
-  const [newGrade, setNewGrade] = useState<Grade>(grade);
 
   function updateGradesWithNewGrade(updatedGrade: Grade) {
     const updatedGrades = grades.map((oldGrade, i) => {
@@ -23,16 +22,14 @@ export default function SingleGrade({
   }
 
   function handleCourseChange(event: ChangeEvent<HTMLInputElement>): void {
-    const updatedGrade = { ...newGrade, Course: event.target.value }
-    setNewGrade(updatedGrade);
+    const updatedGrade = { ...grade, Course: event.target.value }
     updateGradesWithNewGrade(updatedGrade);
   }
 
   function handlePointsChange(event: ChangeEvent<HTMLInputElement>): void {
     const inputValue = event.target.value === '' ? '' : parseInt(event.target.value);
     if (!Number.isNaN(inputValue) || inputValue === '') {
-      const updatedGrade: Grade = { ...newGrade, Points: inputValue }
-      setNewGrade(updatedGrade)
+      const updatedGrade: Grade = { ...grade, Points: inputValue }
       updateGradesWithNewGrade(updatedGrade);
     }
   }
@@ -40,13 +37,12 @@ export default function SingleGrade({
   // TODO: add error message on all invalid on change
   function handleChangeGrades(event: ChangeEvent<HTMLInputElement>): void {
     const gradeWithoutEmptySpaces = event.target.value.replace(/\s+/g, '')
-    const updatedGrade: Grade = { ...newGrade, Grade: gradeWithoutEmptySpaces }
-    setNewGrade(updatedGrade)
+    const updatedGrade: Grade = { ...grade, Grade: gradeWithoutEmptySpaces }
     updateGradesWithNewGrade(updatedGrade);
   }
 
   // TODO: RENAME BOX TO GRADE
-  function removeGrade(event: React.MouseEvent<HTMLElement>): void {
+  function removeGrade(): void {
     // remove from list also removes from html
     setGrades(grades.filter(g => g.Id !== grade.Id));
   }
@@ -59,7 +55,7 @@ export default function SingleGrade({
           Emnenavn:
           <input
             type="text"
-            value={newGrade.Course}
+            value={grade.Course}
             onChange={handleCourseChange}
           />
         </label>
@@ -69,7 +65,7 @@ export default function SingleGrade({
           Studiepoeng:
           <input
             type="text"
-            value={newGrade.Points}
+            value={grade.Points}
             onChange={handlePointsChange}
           />
         </label>
@@ -79,7 +75,7 @@ export default function SingleGrade({
           Karakter:
           <input
             type="text"
-            value={newGrade.Grade}
+            value={grade.Grade}
             onChange={handleChangeGrades}
           />
         </label>
