@@ -6,7 +6,7 @@ The website will initially be in Norwegian and support Norwegian university grad
 ## Features
 
 - [ ] UI for calculating GPA.
-- [ ] Persist courses.
+- [X] Persist courses.
 - [ ] Support different scenarios, like what happens if I get an A in X.
 - [ ] Host website.
 - [ ] Host website on bought domain.
