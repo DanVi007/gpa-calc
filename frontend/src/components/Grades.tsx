@@ -72,6 +72,7 @@ export default function Grades() {
   }
 
 
+  // TODO: add message on invalid grade
   function calculateGpa() {
     if (!grades) {
       setGpa("0")

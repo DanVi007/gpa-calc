@@ -34,7 +34,6 @@ export default function SingleGrade({
     }
   }
 
-  // TODO: add error message on all invalid on change
   function handleChangeGrades(event: ChangeEvent<HTMLInputElement>): void {
     let userInput = event.target.value
     const updatedGrade: Grade = { ...grade, GradePoint: userInput }
