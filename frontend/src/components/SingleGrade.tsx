@@ -37,14 +37,17 @@ export default function SingleGrade({
   // TODO: add error message on all invalid on change
   function handleChangeGrades(event: ChangeEvent<HTMLInputElement>): void {
     let userInput = event.target.value
-    let valid = false
+    const updatedGrade: Grade = { ...grade, GradePoint: userInput }
+    updateGradesWithNewGrade(updatedGrade);
+
+    // let valid = false
 
     // check if it is valid number
-    let gradePointNum = Number(userInput);
-    if (!isNaN(gradePointNum) && gradePointNum >= 0 && gradePointNum <= 5) {
-      valid = true
-      userInput = String(gradePointNum)
-    }
+    // let gradePointNum = Number(userInput);
+    // if (!isNaN(gradePointNum) && gradePointNum >= 0 && gradePointNum <= 5) {
+    //   valid = true
+    //   userInput = String(gradePointNum)
+    // }
 
 
     // if (!valid) {
@@ -58,10 +61,10 @@ export default function SingleGrade({
     //   }
     // }
 
-    if (valid || userInput === '') {
-      const updatedGrade: Grade = { ...grade, GradePoint: userInput }
-      updateGradesWithNewGrade(updatedGrade);
-    }
+    // if (valid || userInput === '') {
+    //   const updatedGrade: Grade = { ...grade, GradePoint: userInput }
+    //   updateGradesWithNewGrade(updatedGrade);
+    // }
 
     // const gradeWithoutEmptySpaces = userInput.replace(/\s+/g, '')
   }
