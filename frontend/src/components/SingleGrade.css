@@ -16,7 +16,6 @@
   font-size:10px;
   cursor:pointer;
   border:none;
-  /* background-color: var(--background); */
   background-color: var(--accent);
   border-radius:50%;
   color: var(--accent)

@@ -2,9 +2,6 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(230px, 100%), 1fr));
   gap: 1rem;
-  /* background-color:#5E63B6; */
-  /* background-color:#F5C7F7; */
-  /* background-color:#F5C7F7; */
   background-color: var(--background)
 
 }
