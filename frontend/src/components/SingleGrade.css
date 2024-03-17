@@ -1,6 +1,37 @@
 .grade {
-  border: 1px solid black;
   margin: 10px;
-  padding: 20px;
+  padding: 30px;
+  padding-right: 40px;
   border-radius: 10px;
+  color:var(--text);
+  background-color:var(--primary);
+  position:relative;
+
 }
+
+.close-btn {
+  position:absolute;
+  right:5px;
+  top:5px;
+  font-size:10px;
+  cursor:pointer;
+  border:none;
+  /* background-color: var(--background); */
+  background-color: var(--accent);
+  border-radius:50%;
+  color: var(--accent)
+}
+
+.close-btn:hover {
+  color:var(--text);
+  color:#76837D;
+}
+.grade-input{
+  border:none;
+  border-radius: 2px;
+  width:100%;
+  background-color:var(--background);
+  color:var(--text);
+
+}
+

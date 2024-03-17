@@ -75,34 +75,39 @@ export default function SingleGrade({
 
   return (
     <div className="grade">
-      <button type="button" onClick={removeGrade}>Remove</button>
+      <button type="button" className="close-btn" onClick={removeGrade}>
+        ✕
+      </button>
       <form>
         <label>
-          Emnenavn:
           <input
+            placeholder="Emnenavn"
             type="text"
             value={grade.Course}
             onChange={handleCourseChange}
+            className="grade-input"
           />
         </label>
         <br />
         <br />
         <label>
-          Studiepoeng:
           <input
+            placeholder="Studiepoeng"
             type="text"
             value={grade.Points}
             onChange={handlePointsChange}
+            className="grade-input"
           />
         </label>
         <br />
         <br />
         <label>
-          Karakter:
           <input
             type="text"
+            placeholder="Karakter"
             value={grade.GradePoint}
             onChange={handleChangeGrades}
+            className="grade-input"
           />
         </label>
       </form>
