@@ -22,8 +22,8 @@
 }
 
 .close-btn:hover {
-  color:var(--text);
-  color:#76837D;
+  color:hsl(0, 41%, 65%); /* accent in hsl */
+  color:hsl(0, 41%, 47%);  /* lowering brightness of accent color */
 }
 .grade-input{
   border:none;
