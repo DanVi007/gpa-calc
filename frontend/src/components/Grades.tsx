@@ -137,13 +137,13 @@ export default function Grades() {
   return (
     <div>
       <div className="button-bar">
-        <button type="button" onClick={addEmptyGrade}>
+        <button id="calculate-grade-btn" className="button-bar-btn" type="button" onClick={calculateGpa}>
+          Beregn karakter
+        </button>
+        <span>GPA: {gpa}</span>
+        <button type="button" id="add-grade-btn" className="button-bar-btn" onClick={addEmptyGrade}>
           +
         </button>
-        <button type="button" onClick={calculateGpa}>
-          calculate gpa
-        </button>
-        <div>GPA: {gpa}</div>
       </div>
       <div className="grades">{displayGrades()}</div>
     </div>
