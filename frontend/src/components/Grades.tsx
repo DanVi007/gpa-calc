@@ -143,7 +143,6 @@ export default function Grades() {
         <button id="calculate-grade-btn" className="button-bar-btn" type="button" onClick={calculateGpa}>
           Beregn karakter
         </button>
-        <span>{grades?.length}</span>
         <span>GPA: {gpa}</span>
         <button type="button" id="add-grade-btn" className="button-bar-btn" onClick={addEmptyGrade}>
           +
