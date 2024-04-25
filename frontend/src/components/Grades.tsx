@@ -5,13 +5,16 @@ import { Grade } from "../models/Grade";
 
 export default function Grades() {
 
+  const [availableGradeId, setAvailableGradeId] = useState<number>(0);
   const [grades, setGrades] = useState<Grade[]>();
   // TODO: make functionality to set new scenario
   const [currentScenario, setCurrentScenario] = useState<string>("initial")
   const [gpa, setGpa] = useState<string>("")
 
   function addEmptyGrade() {
-    const newId = grades?.length || 0
+
+    const newId = availableGradeId
+    setAvailableGradeId(availableGradeId + 1)
     const emptyGrade: Grade = {
       Id: String(newId),
       Course: "",
@@ -140,6 +143,7 @@ export default function Grades() {
         <button id="calculate-grade-btn" className="button-bar-btn" type="button" onClick={calculateGpa}>
           Beregn karakter
         </button>
+        <span>{grades?.length}</span>
         <span>GPA: {gpa}</span>
         <button type="button" id="add-grade-btn" className="button-bar-btn" onClick={addEmptyGrade}>
           +
