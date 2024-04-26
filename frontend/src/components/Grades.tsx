@@ -102,9 +102,9 @@ export default function Grades() {
         valid = false
       }
     }
-    // TODO: ROUND AND CHECK HOW UNIVERSITIES ROUND
+    // TODO: CHECK HOW OTHER UNIVERSITIES ROUND
     if (valid) {
-      setGpa(String(gradePoints / totalStudyPoints))
+      setGpa(String((gradePoints / totalStudyPoints).toFixed(2)))
     } else {
       console.error("There are some invalid fields")
       setGpa('')
