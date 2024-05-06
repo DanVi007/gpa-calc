@@ -1,4 +1,3 @@
-//TODO: Make single grade also have swap grade
 import { Grade } from "../models/Grade";
 import "./SingleGrade.css";
 import { ChangeEvent } from "react";
