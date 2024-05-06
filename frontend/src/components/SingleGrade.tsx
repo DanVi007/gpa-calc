@@ -14,9 +14,6 @@ export default function SingleGrade({
 }: { grade: Grade; index: number; grades: Grade[]; setGrades: (value: Grade[]) => void; swap: boolean }) {
 
 
-  const [oldSwapGrade, setOldSwapGrade] = useState<number | string>("TEST");
-  const [newSwapGrade, setNewSwapGrade] = useState<number | string>("TEST");
-
   function updateGradesWithNewGrade(updatedGrade: Grade) {
     const updatedGrades = grades.map((oldGrade, i) => {
       if (i === index) {
@@ -58,7 +55,7 @@ export default function SingleGrade({
         <input
           type="text"
           placeholder="Karakter"
-          value={grade.NewGradePoint}
+          value={grade.CurrentGradePoint}
           onChange={handleChangeGrades}
           className="grade-input"
         />
@@ -73,13 +70,13 @@ export default function SingleGrade({
         <input
           type="text"
           placeholder="Gammel karakter"
-          value={oldSwapGrade}
+          value={grade.CurrentGradePoint}
           className="old-swap-grade-input"
         />
         <input
           type="text"
           placeholder="Ny karakter"
-          value={newSwapGrade}
+          value={grade.NewGradePoint}
           className="old-swap-grade-input"
         />
       </label>

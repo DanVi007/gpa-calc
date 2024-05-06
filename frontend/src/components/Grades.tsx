@@ -11,7 +11,7 @@ export default function Grades() {
   const [currentScenario, setCurrentScenario] = useState<string>("initial")
   const [gpa, setGpa] = useState<string>("")
 
-  function addEmptyGrade() {
+  function addEmptyGrade(swap: boolean) {
 
     const newId = availableGradeId
     setAvailableGradeId(availableGradeId + 1)
@@ -20,7 +20,7 @@ export default function Grades() {
       Course: "",
       Points: "",
       CurrentGradePoint: '',
-      SwapGrade: false,
+      SwapGrade: swap,
       NewGradePoint: "",
     };
     if (grades) {
@@ -36,7 +36,7 @@ export default function Grades() {
   function displayGrades() {
     if (grades) {
       return grades.map((grade, index) => (
-        <SingleGrade grade={grade} index={index} grades={grades} setGrades={setGrades} key={grade.Id} swap={true} />
+        <SingleGrade grade={grade} index={index} grades={grades} setGrades={setGrades} key={grade.Id} swap={grade.SwapGrade} />
       ));
     }
   }
@@ -146,11 +146,14 @@ export default function Grades() {
           Beregn karakter
         </button>
         <span>GPA: {gpa}</span>
-        <button type="button" id="add-grade-btn" className="button-bar-btn" onClick={addEmptyGrade}>
+        <button type="button" id="add-swap-grade-btn" className="button-bar-btn" onClick={() => addEmptyGrade(true)}>
+          &lt;&gt;
+        </button>
+        <button type="button" id="add-grade-btn" className="button-bar-btn" onClick={() => addEmptyGrade(false)}>
           +
         </button>
       </div>
       <div className="grades">{displayGrades()}</div>
-    </div>
+    </div >
   );
 }
