@@ -1,6 +1,8 @@
+//TODO: Make single grade also have swap grade
 import { Grade } from "../models/Grade";
 import "./SingleGrade.css";
 import { ChangeEvent } from "react";
+import { useState } from "react";
 
 // TODO: style
 export default function SingleGrade({
@@ -8,7 +10,12 @@ export default function SingleGrade({
   index,
   grades,
   setGrades,
-}: { grade: Grade; index: number; grades: Grade[]; setGrades: (value: Grade[]) => void }) {
+  swap,
+}: { grade: Grade; index: number; grades: Grade[]; setGrades: (value: Grade[]) => void; swap: boolean }) {
+
+
+  const [oldSwapGrade, setOldSwapGrade] = useState<number | string>("TEST");
+  const [newSwapGrade, setNewSwapGrade] = useState<number | string>("TEST");
 
   function updateGradesWithNewGrade(updatedGrade: Grade) {
     const updatedGrades = grades.map((oldGrade, i) => {
@@ -73,6 +80,40 @@ export default function SingleGrade({
     setGrades(grades.filter(g => g.Id !== grade.Id));
   }
 
+  function normalGrade(): JSX.Element {
+    return (
+      <label>
+        <input
+          type="text"
+          placeholder="Karakter"
+          value={grade.GradePoint}
+          onChange={handleChangeGrades}
+          className="grade-input"
+        />
+      </label>
+    )
+  }
+
+
+  function swapGrade(): JSX.Element {
+    return (
+      <label>
+        <input
+          type="text"
+          placeholder="Gammel karakter"
+          value={oldSwapGrade}
+          className="old-swap-grade-input"
+        />
+        <input
+          type="text"
+          placeholder="Ny karakter"
+          value={newSwapGrade}
+          className="old-swap-grade-input"
+        />
+      </label>
+    )
+  }
+
   return (
     <div className="grade">
       <button type="button" className="close-btn" onClick={removeGrade}>
@@ -101,15 +142,7 @@ export default function SingleGrade({
         </label>
         <br />
         <br />
-        <label>
-          <input
-            type="text"
-            placeholder="Karakter"
-            value={grade.GradePoint}
-            onChange={handleChangeGrades}
-            className="grade-input"
-          />
-        </label>
+        {swap ? swapGrade() : normalGrade()}
       </form>
     </div>
   );
