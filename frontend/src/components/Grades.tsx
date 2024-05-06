@@ -19,7 +19,9 @@ export default function Grades() {
       Id: String(newId),
       Course: "",
       Points: "",
-      GradePoint: '',
+      CurrentGradePoint: '',
+      SwapGrade: false,
+      NewGradePoint: "",
     };
     if (grades) {
       setGrades([...grades, emptyGrade]);
@@ -95,7 +97,7 @@ export default function Grades() {
       }
 
       try {
-        gradePoints += validateGradePoints(grade.GradePoint) * grade.Points;
+        gradePoints += validateGradePoints(grade.CurrentGradePoint) * grade.Points;
         totalStudyPoints += grade.Points;
       } catch (error) {
         console.error(error)

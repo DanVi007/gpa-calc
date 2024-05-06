@@ -4,5 +4,7 @@ export interface Grade {
   Id: string
   Course: string;
   Points: number | '';
-  GradePoint: number | string;
+  CurrentGradePoint: number | string;
+  SwapGrade: boolean;
+  NewGradePoint: number | string;
 }

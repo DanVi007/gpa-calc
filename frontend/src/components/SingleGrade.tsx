@@ -43,7 +43,7 @@ export default function SingleGrade({
 
   function handleChangeGrades(event: ChangeEvent<HTMLInputElement>): void {
     let userInput = event.target.value
-    const updatedGrade: Grade = { ...grade, GradePoint: userInput }
+    const updatedGrade: Grade = { ...grade, NewGradePoint: userInput }
     updateGradesWithNewGrade(updatedGrade);
   }
 
@@ -58,7 +58,7 @@ export default function SingleGrade({
         <input
           type="text"
           placeholder="Karakter"
-          value={grade.GradePoint}
+          value={grade.NewGradePoint}
           onChange={handleChangeGrades}
           className="grade-input"
         />
