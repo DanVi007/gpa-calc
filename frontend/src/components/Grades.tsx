@@ -5,10 +5,12 @@ import { Grade } from "../models/Grade";
 
 export default function Grades() {
 
+  const SCENARIOS_KEY = "SCENARIOS"
   const [availableGradeId, setAvailableGradeId] = useState<number>(0);
   const [grades, setGrades] = useState<Grade[]>();
   // TODO: make functionality to set new scenario
   const [currentScenario, setCurrentScenario] = useState<string>("initial")
+  const [scenarios, setScenarios] = useState<string[]>([currentScenario])
   const [gpa, setGpa] = useState<string>("")
 
   function addEmptyGrade(swap: boolean) {
@@ -122,6 +124,14 @@ export default function Grades() {
   )
 
   useEffect(
+    function setScenarios() {
+      if (scenarios) {
+        localStorage.setItem(SCENARIOS_KEY, JSON.stringify(scenarios))
+      }
+    }, [scenarios]
+  )
+
+  useEffect(
     function getGrades() {
       const retrievedStorage: string | null = localStorage.getItem(currentScenario)
       if (retrievedStorage) {
@@ -139,6 +149,36 @@ export default function Grades() {
     }, [currentScenario]
   )
 
+  useEffect(
+    function getScenarios() {
+      const retrievedStorage: string | null = localStorage.getItem(SCENARIOS_KEY)
+      if (retrievedStorage) {
+        // TODO: check JSON parse is correct object
+        // WARNING: Source map error: Error: JSON.parse: unexpected character at line 1 column 1 of the JSON data
+        // Resource URL: 
+        // Source Map URL: react_devtools_backend_compact.js.map
+        try {
+          const retrievedScenarios: string[] = JSON.parse(retrievedStorage);
+          setScenarios(retrievedScenarios)
+        } catch (error) {
+          console.error(error);
+        }
+      }
+    }, []
+  )
+
+  function displayScenarios() {
+    if (scenarios) {
+      return scenarios.map((scenario) => (
+        <span>{scenario} </span>
+      ));
+    }
+  }
+
+  function addScenario() {
+    setScenarios([...scenarios, "new scenario"])
+  }
+
   return (
     <div>
       <div className="button-bar">
@@ -152,6 +192,11 @@ export default function Grades() {
         <button type="button" id="add-grade-btn" className="button-bar-btn" onClick={() => addEmptyGrade(false)}>
           +
         </button>
+        <span> Current scenario: {currentScenario}</span>
+        <button type="button" id="add-scenario-btn" className="button-bar-btn" onClick={() => { setScenarios([...scenarios, "new scenario"]) }}>+</button>
+      </div>
+      <div>
+        {displayScenarios()}
       </div>
       <div className="grades">{displayGrades()}</div>
     </div >
