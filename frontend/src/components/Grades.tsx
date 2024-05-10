@@ -142,6 +142,7 @@ export default function Grades() {
         try {
           const retrievedGrades: Grade[] = JSON.parse(retrievedStorage);
           setGrades(retrievedGrades)
+          console.log(grades)
         } catch (error) {
           console.error(error);
         }
@@ -170,13 +171,9 @@ export default function Grades() {
   function displayScenarios() {
     if (scenarios) {
       return scenarios.map((scenario) => (
-        <span>{scenario} </span>
+        <button onClick={() => { setCurrentScenario(scenario) }}>{scenario} </button>
       ));
     }
-  }
-
-  function addScenario() {
-    setScenarios([...scenarios, "new scenario"])
   }
 
   return (
