@@ -1,9 +1,9 @@
-import SingleGrade from "./SingleGrade";
-import "./Grades.css";
+import SingleGrade from "../components/SingleGrade";
+import "./GradesPage.css";
 import { useEffect, useState } from "react";
-import { Grade } from "../models/Grade";
+import { Grade } from "../models";
 
-export default function Grades() {
+export default function GradesPage() {
 
   const SCENARIOS_KEY = "SCENARIOS"
   const [availableGradeId, setAvailableGradeId] = useState<number>(0);
@@ -195,7 +195,7 @@ export default function Grades() {
       <div>
         {displayScenarios()}
       </div>
-      <div className="grades">{displayGrades()}</div>
+      <div className="gradesPage">{displayGrades()}</div>
     </div >
   );
 }

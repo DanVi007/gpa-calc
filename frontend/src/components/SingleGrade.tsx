@@ -1,7 +1,6 @@
-import { Grade } from "../models/Grade";
+import { Grade } from "../models";
 import "./SingleGrade.css";
 import { ChangeEvent } from "react";
-import { useState } from "react";
 
 // TODO: style
 export default function SingleGrade({

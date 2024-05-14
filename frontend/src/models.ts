@@ -8,3 +8,10 @@ export interface Grade {
   SwapGrade: boolean;
   NewGradePoint: number | string;
 }
+
+export interface Scenario {
+  Id: number
+  Name: string
+  AvailableGradeId: number
+  Grades: Grade[]
+}

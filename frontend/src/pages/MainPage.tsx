@@ -1,5 +1,4 @@
-import Grades from "../components/Grades";
-
+import GradesPage from "./GradesPage";
 export default function MainPage() {
-  return <Grades />;
+  return <GradesPage />;
 }

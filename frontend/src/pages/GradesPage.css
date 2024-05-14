@@ -1,4 +1,4 @@
-.grades {
+.gradesPage {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(230px, 100%), 1fr));
   gap: 1rem;
