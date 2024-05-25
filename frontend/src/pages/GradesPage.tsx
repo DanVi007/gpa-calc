@@ -1,9 +1,9 @@
 import "./GradesPage.css";
 import { useEffect, useState } from "react";
 
-import { getAvailableScenarioId, getScenarioWithId } from "../utils/Storage";
-import { Grade, setCourse, setCurrentGradePoint, setNewGradePoint } from "../models/Grade";
-import { calculateGpa, RemoveGradeWithGradeId, Scenario } from "../models/Scenario";
+import { getAvailableScenarioId, getScenarioWithId, setScenarioToStorage } from "../utils/Storage";
+import { Grade, setCourse, setCurrentGradePoint, setNewGradePoint, setPoints } from "../models/Grade";
+import { calculateGpa, RemoveGradeWithGradeId, Scenario, UpdateGrade } from "../models/Scenario";
 import { INITIAL_SCENARIO, INITIAL_SCENARIO_NAMES_MAP } from "../utils/Constants";
 
 export default function GradesPage() {
@@ -146,9 +146,10 @@ export default function GradesPage() {
             <input
               placeholder="Emnenavn"
               type="text"
+              // value={GetGradeWithId(currentScenario, gradeId)?.Course}
               value={grade.Course}
               onChange={(event) => {
-                setCourse(grade, event.target.value)
+                setCurrentScenario(UpdateGrade(currentScenario, setCourse(grade, event.target.value)))
               }}
               className="grade-input"
             />
@@ -161,7 +162,7 @@ export default function GradesPage() {
               type="text"
               value={grade.Points}
               onChange={(event) => {
-                setCurrentGradePoint(grade, event.target.value)
+                setCurrentScenario(UpdateGrade(currentScenario, setPoints(grade, event.target.value)))
               }}
               className="grade-input"
             />
@@ -184,6 +185,10 @@ export default function GradesPage() {
     }
     return grades
   }
+
+  useEffect(() => {
+    setScenarioToStorage(currentScenario)
+  }, [currentScenario])
 
 
 

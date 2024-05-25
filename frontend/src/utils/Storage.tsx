@@ -71,3 +71,6 @@ export function getScenarioWithId(id: number): Scenario {
   return scenario
 }
 
+export function setScenarioToStorage(scenario: Scenario) {
+  localStorage.setItem(String(scenario.Id), JSON.stringify(scenario))
+}

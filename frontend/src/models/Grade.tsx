@@ -14,8 +14,12 @@ export function setCourse(grade: Grade, newCourse: string): Grade {
   return { ...grade, Course: newCourse }
 }
 
-export function setPoints(grade: Grade, newPoints: number): Grade {
-  return { ...grade, Points: newPoints }
+export function setPoints(grade: Grade, newPoints: number | string): Grade {
+  let pointsNum = Number(newPoints)
+  if (isNaN(pointsNum)) {
+    throw new Error("points is not valid")
+  }
+  return { ...grade, Points: pointsNum }
 }
 
 export function parseGradePointToNumber(gradePoint: number | string): number {
