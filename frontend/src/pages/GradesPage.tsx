@@ -2,8 +2,8 @@ import "./GradesPage.css";
 import { useEffect, useState } from "react";
 
 import { getAvailableScenarioId, getScenariosIdNameMap, getScenarioWithId, setScenariosIdNameMapToStorage, setScenarioToStorage, updateAvailableScenarioId } from "../utils/Storage";
-import { Grade, setCourse, setCurrentGradePoint, setNewGradePoint, setPoints } from "../models/Grade";
-import { calculateGpa, RemoveGradeWithGradeId, Scenario, UpdateGrade } from "../models/Scenario";
+import { Grade } from "../models/Grade";
+import { calculateGpa, RemoveGradeWithGradeId, Scenario } from "../models/Scenario";
 import { INITIAL_SCENARIO, INITIAL_SCENARIO_NAMES_MAP } from "../utils/Constants";
 import SingleGrade from "../components/SingleGrade";
 
