@@ -1,7 +1,7 @@
 import "./GradesPage.css";
 import { useEffect, useState } from "react";
 
-import { getAvailableScenarioId, getScenarioWithId, setScenarioToStorage, updateAvailableScenarioId } from "../utils/Storage";
+import { getAvailableScenarioId, getScenariosIdNameMap, getScenarioWithId, setScenariosIdNameMapToStorage, setScenarioToStorage, updateAvailableScenarioId } from "../utils/Storage";
 import { Grade, setCourse, setCurrentGradePoint, setNewGradePoint, setPoints } from "../models/Grade";
 import { calculateGpa, RemoveGradeWithGradeId, Scenario, UpdateGrade } from "../models/Scenario";
 import { INITIAL_SCENARIO, INITIAL_SCENARIO_NAMES_MAP } from "../utils/Constants";
@@ -15,8 +15,26 @@ export default function GradesPage() {
   const [scenarioNamesMap, setScenarioNamesMap] = useState<Map<number, string>>(INITIAL_SCENARIO_NAMES_MAP)
 
   useEffect(() => {
+    try {
+      let scenarioNamesMapFound: Map<number, string> = getScenariosIdNameMap()
+      if (scenarioNamesMapFound.size !== 0) {
+        console.debug(scenarioNamesMapFound)
+        setScenarioNamesMap(scenarioNamesMapFound)
+      }
+    } catch (error) {
+      console.error("could not set scenario names:" + error)
+    }
+  }, [])
+
+  useEffect(() => {
     setScenarioToStorage(currentScenario)
   }, [currentScenario])
+
+  useEffect(() => {
+    if (scenarioNamesMap !== INITIAL_SCENARIO_NAMES_MAP) {
+      setScenariosIdNameMapToStorage(scenarioNamesMap)
+    }
+  }, [scenarioNamesMap])
 
   function addEmptyGrade(swap: boolean) {
     let newId = currentScenario.AvailableGradeId
@@ -71,11 +89,13 @@ export default function GradesPage() {
       const keyValuePair: [number, string][] = [[newScenario.Id, newScenario.Name]]
       setScenarioNamesMap(new Map<number, string>(keyValuePair))
     } else {
-      setScenarioNamesMap(scenarioNamesMap.set(newScenario.Id, newScenario.Name))
+      setScenarioNamesMap(prevMap => {
+        const newMap = new Map(prevMap)
+        newMap.set(newScenario.Id, newScenario.Name)
+        return newMap
+      })
     }
   }
-
-
 
   function onClickScenario(scenarioId: number) {
     try {
@@ -101,7 +121,6 @@ export default function GradesPage() {
     }
     return scenarioButtons
   }
-
 
   function removeGrade(grade: Grade) {
     setCurrentScenario(RemoveGradeWithGradeId(currentScenario, grade.Id))

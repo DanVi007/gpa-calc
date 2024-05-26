@@ -1,4 +1,4 @@
-import { AVAILABLE_SCENARIO_ID_KEY, SCENARIOS_KEY } from './Constants'
+import { AVAILABLE_SCENARIO_ID_KEY, SCENARIOS_NAMES_KEY } from './Constants'
 import { Scenario } from '../models/Scenario'
 
 export function updateAvailableScenarioId(newAvailableScenarioId: number) {
@@ -40,18 +40,33 @@ export function getAvailableScenarioId(): number | null {
 
 /**
  * Get all the scenario names in storage
- *
- * @returns string[]
  */
+// export function getScenariosIdNameMap(): Map<number, string> {
+//   const scenariosJSON: string | null = localStorage.getItem(SCENARIOS_NAMES_KEY)
+//   if (scenariosJSON === null) {
+//     console.log("no map found in local storage")
+//     return new Map<number, string>()
+//   }
+//
+//   const scenarios: Map<number, string> | undefined = JSON.parse(scenariosJSON)
+//   if (scenarios === undefined) {
+//     console.log("failed to parse scenarios map from localStorage")
+//     return new Map<number, string>()
+//   }
+//
+//   return scenarios
+// }
+//
 export function getScenariosIdNameMap(): Map<number, string> {
-  const scenariosJSON: string | null = localStorage.getItem(SCENARIOS_KEY)
+  const scenariosJSON: string | null = localStorage.getItem(SCENARIOS_NAMES_KEY)
+  console.debug(scenariosJSON)
   if (scenariosJSON === null) {
     console.log("no map found in local storage")
     return new Map<number, string>()
   }
 
-  const scenarios: Map<number, string> | undefined = JSON.parse(scenariosJSON)
-  if (scenarios === undefined) {
+  const scenarios: Map<number, string> = new Map<number, string>(JSON.parse(scenariosJSON))
+  if (!(scenarios instanceof Map<number, string>)) {
     console.log("failed to parse scenarios map from localStorage")
     return new Map<number, string>()
   }
@@ -83,3 +98,7 @@ export function getScenarioWithId(id: number): Scenario {
 export function setScenarioToStorage(scenario: Scenario) {
   localStorage.setItem(String(scenario.Id), JSON.stringify(scenario))
 }
+
+export function setScenariosIdNameMapToStorage(scenariosNamesMap: Map<number, string>) {
+  localStorage.setItem(SCENARIOS_NAMES_KEY, JSON.stringify(Array.from(scenariosNamesMap)))
+} 
