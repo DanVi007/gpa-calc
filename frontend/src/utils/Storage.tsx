@@ -37,29 +37,8 @@ export function getAvailableScenarioId(): number | null {
   return availableScenarioId
 }
 
-
-/**
- * Get all the scenario names in storage
- */
-// export function getScenariosIdNameMap(): Map<number, string> {
-//   const scenariosJSON: string | null = localStorage.getItem(SCENARIOS_NAMES_KEY)
-//   if (scenariosJSON === null) {
-//     console.log("no map found in local storage")
-//     return new Map<number, string>()
-//   }
-//
-//   const scenarios: Map<number, string> | undefined = JSON.parse(scenariosJSON)
-//   if (scenarios === undefined) {
-//     console.log("failed to parse scenarios map from localStorage")
-//     return new Map<number, string>()
-//   }
-//
-//   return scenarios
-// }
-//
 export function getScenariosIdNameMap(): Map<number, string> {
   const scenariosJSON: string | null = localStorage.getItem(SCENARIOS_NAMES_KEY)
-  console.debug(scenariosJSON)
   if (scenariosJSON === null) {
     console.log("no map found in local storage")
     return new Map<number, string>()

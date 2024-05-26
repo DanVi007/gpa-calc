@@ -18,7 +18,6 @@ export default function GradesPage() {
     try {
       let scenarioNamesMapFound: Map<number, string> = getScenariosIdNameMap()
       if (scenarioNamesMapFound.size !== 0) {
-        console.debug(scenarioNamesMapFound)
         setScenarioNamesMap(scenarioNamesMapFound)
       }
     } catch (error) {
@@ -137,9 +136,6 @@ export default function GradesPage() {
     }
     return grades
   }
-
-
-
 
   return (
     <div>

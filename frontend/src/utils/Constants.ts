@@ -1,7 +1,6 @@
 import { Scenario } from "../models/Scenario"
 
 export const AVAILABLE_SCENARIO_ID_KEY: string = "AVAILABLE_SCENARIO_ID"
-// export const SCENARIOS_KEY: string = "SCENARIOS"
 export const SCENARIOS_NAMES_KEY: string = "SCENARIO_NAMES"
 
 export const INITIAL_SCENARIO: Scenario = {
