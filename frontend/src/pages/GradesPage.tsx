@@ -1,7 +1,7 @@
 import "./GradesPage.css";
 import { useEffect, useState } from "react";
 
-import { getAvailableScenarioId, getScenarioWithId, setScenarioToStorage } from "../utils/Storage";
+import { getAvailableScenarioId, getScenarioWithId, setScenarioToStorage, updateAvailableScenarioId } from "../utils/Storage";
 import { Grade, setCourse, setCurrentGradePoint, setNewGradePoint, setPoints } from "../models/Grade";
 import { calculateGpa, RemoveGradeWithGradeId, Scenario, UpdateGrade } from "../models/Scenario";
 import { INITIAL_SCENARIO, INITIAL_SCENARIO_NAMES_MAP } from "../utils/Constants";
@@ -46,6 +46,7 @@ export default function GradesPage() {
     let id: number | null = getAvailableScenarioId();
     if (id === null) {
       id = 0
+      updateAvailableScenarioId(id)
     }
 
     let newScenario: Scenario = {
@@ -60,7 +61,7 @@ export default function GradesPage() {
       newScenario = {
         ...newScenario,
         AvailableGradeId: currentScenario.AvailableGradeId,
-        Grades: currentScenario.Grades
+        Grades: currentScenario.Grades,
       };
     }
 
@@ -75,22 +76,27 @@ export default function GradesPage() {
   }
 
 
+
+  function onClickScenario(scenarioId: number) {
+    try {
+      setCurrentScenario(getScenarioWithId(scenarioId))
+    } catch (error) {
+      console.error("could not find scenario with id: " + scenarioId)
+    }
+  }
+
   function displayScenarios(): React.ReactElement[] {
     let scenarioButtons: React.ReactElement[] = []
     if (scenarioNamesMap) {
       scenarioNamesMap.forEach((scenarioName, scenarioId) => {
-        try {
-          const scenario: Scenario = getScenarioWithId(scenarioId)
-          let scenarioButton: React.ReactElement =
-            <button onClick={() => { setCurrentScenario(scenario) }}>
-              {scenarioName}
-            </button>
+        let scenarioButton: React.ReactElement =
+          <button onClick={() => { onClickScenario(scenarioId) }}>
+            {scenarioId}
+            {scenarioName}
+          </button>
 
-          scenarioButtons = [...scenarioButtons, scenarioButton]
+        scenarioButtons = [...scenarioButtons, scenarioButton]
 
-        } catch (error) {
-          console.error(error)
-        }
       });
     }
     return scenarioButtons

@@ -1,6 +1,10 @@
 import { AVAILABLE_SCENARIO_ID_KEY, SCENARIOS_KEY } from './Constants'
 import { Scenario } from '../models/Scenario'
 
+export function updateAvailableScenarioId(newAvailableScenarioId: number) {
+  localStorage.setItem(AVAILABLE_SCENARIO_ID_KEY, newAvailableScenarioId.toString())
+}
+
 /**
  * Gets an unused scenario id from Storage. 
  * Updates the scenario id after each get
@@ -23,7 +27,12 @@ export function getAvailableScenarioId(): number | null {
   }
 
   // update id
-  localStorage.setItem(AVAILABLE_SCENARIO_ID_KEY, (availableScenarioId + 1).toString())
+  try {
+    updateAvailableScenarioId(availableScenarioId + 1)
+  } catch (error) {
+    console.error("could not update scenario id: " + error)
+    return null
+  }
 
   return availableScenarioId
 }
