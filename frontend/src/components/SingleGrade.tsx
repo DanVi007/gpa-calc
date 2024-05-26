@@ -1,123 +1,102 @@
-export { }
-// import { Grade } from "../models";
-// import "./SingleGrade.css";
-// import { ChangeEvent } from "react";
-// import { setCurrentGradePoint, setNewGradePoint } from "../models/Grade";
-//
-// // TODO: style
-// export default function SingleGrade({
-//   grade,
-//   swap
-// }: { grade: Grade; swap: boolean }) {
-//
-//
-//   function updateGradesWithNewGrade(updatedGrade: Grade) {
-//     const updatedGrades = grades.map((oldGrade, i) => {
-//       if (i === index) {
-//         return updatedGrade
-//       } else {
-//         return oldGrade;
-//       }
-//     })
-//     setGrades(updatedGrades);
-//   }
-//
-//   function handleCourseChange(event: ChangeEvent<HTMLInputElement>): void {
-//     const updatedGrade = { ...grade, Course: event.target.value }
-//     updateGradesWithNewGrade(updatedGrade);
-//   }
-//
-//   function handlePointsChange(event: ChangeEvent<HTMLInputElement>): void {
-//     const inputValue = event.target.value === '' ? '' : parseInt(event.target.value);
-//     if (!Number.isNaN(inputValue) || inputValue === '') {
-//       const updatedGrade: Grade = { ...grade, Points: inputValue }
-//       updateGradesWithNewGrade(updatedGrade);
-//     }
-//   }
-//
-//   function handleChangeGrades(event: ChangeEvent<HTMLInputElement>): void {
-//     let userInput = event.target.value
-//     const updatedGrade: Grade = { ...grade, NewGradePoint: userInput }
-//     updateGradesWithNewGrade(updatedGrade);
-//   }
-//
-//   function removeGrade(): void {
-//     // remove from list also removes from html
-//     setGrades(grades.filter(g => g.Id !== grade.Id));
-//   }
-//
-//   function normalGrade(grade: Grade): JSX.Element {
-//     return (
-//       <label>
-//         <input
-//           type="text"
-//           placeholder="Karakter"
-//           value={grade.CurrentGradePoint}
-//           onChange={(event) => {
-//             setCurrentGradePoint(grade, event.target.value)
-//           }}
-//           className="grade-input"
-//         />
-//       </label>
-//     )
-//   }
-//
-//
-//   function swapGrade(grade: Grade): JSX.Element {
-//     return (
-//       <label>
-//         <input
-//           type="text"
-//           placeholder="Gammel karakter"
-//           value={grade.CurrentGradePoint}
-//           className="old-swap-grade-input"
-//           onChange={(event) => {
-//             setCurrentGradePoint(grade, event.target.value)
-//           }}
-//         />
-//         <input
-//           type="text"
-//           placeholder="Ny karakter"
-//           value={grade.NewGradePoint}
-//           className="old-swap-grade-input"
-//           onChange={(event) => {
-//             setNewGradePoint(grade, event.target.value)
-//           }}
-//         />
-//       </label>
-//     )
-//   }
-//
-//   return (
-//     <div className="grade">
-//       <button type="button" className="close-btn" onClick={removeGrade}>
-//         ✕
-//       </button>
-//       <form>
-//         <label>
-//           <input
-//             placeholder="Emnenavn"
-//             type="text"
-//             value={grade.Course}
-//             onChange={handleCourseChange}
-//             className="grade-input"
-//           />
-//         </label>
-//         <br />
-//         <br />
-//         <label>
-//           <input
-//             placeholder="Studiepoeng"
-//             type="text"
-//             value={grade.Points}
-//             onChange={handlePointsChange}
-//             className="grade-input"
-//           />
-//         </label>
-//         <br />
-//         <br />
-//         {grade.Swap ? swapGrade(grade) : normalGrade(grade)}
-//       </form>
-//     </div>
-//   );
-// }
+import { useState } from "react";
+import { Grade } from "../models/Grade";
+export default function SingleGrade(
+  { key, grade, removeGrade }: { key: number, grade: Grade, removeGrade: (grade: Grade) => void }
+) {
+
+  const [course, setCourse] = useState<string>(grade.Course)
+  const [points, setPoints] = useState<string>(String(grade.Points))
+  const [CurrentGradePoint, setCurrentGradePoint] = useState<string>(String(grade.CurrentGradePoint))
+  const [newGradePoint, setNewGradePoint] = useState<string>(String(grade.NewGradePoint))
+
+  function normalGrade(): JSX.Element {
+    return (
+      <label>
+        <input
+          type="text"
+          placeholder="Karakter"
+          value={CurrentGradePoint}
+          onChange={(event) => {
+            setCurrentGradePoint(event.target.value)
+          }}
+          className="grade-input"
+        />
+      </label>
+    )
+  }
+
+
+  function swapGrade(): JSX.Element {
+    return (
+      <label>
+        <input
+          type="text"
+          placeholder="Gammel karakter"
+          value={CurrentGradePoint}
+          className="old-swap-grade-input"
+          onChange={(event) => {
+            setCurrentGradePoint(event.target.value)
+          }}
+        />
+        <input
+          type="text"
+          placeholder="Ny karakter"
+          value={newGradePoint}
+          className="old-swap-grade-input"
+          onChange={(event) => {
+            setNewGradePoint(event.target.value)
+          }}
+        />
+      </label>
+    )
+  }
+
+  function displayGrade(): React.ReactElement {
+
+    return (
+      <div className="grade">
+        <button type="button" className="close-btn" onClick={() => {
+          removeGrade(grade)
+        }}>
+          ✕
+        </button>
+        <form>
+          <label>
+            <input
+              placeholder="Emnenavn"
+              type="text"
+              // value={GetGradeWithId(currentScenario, gradeId)?.Course}
+              value={course}
+              onChange={(event) => {
+                setCourse(event.target.value)
+              }}
+              className="grade-input"
+            />
+          </label>
+          <br />
+          <br />
+          <label>
+            <input
+              placeholder="Studiepoeng"
+              type="text"
+              value={points}
+              onChange={(event) => {
+                setPoints(event.target.value)
+              }}
+              className="grade-input"
+            />
+          </label>
+          <br />
+          <br />
+          {grade.SwapGrade ? swapGrade() : normalGrade()}
+        </form>
+      </div>
+    )
+  }
+
+  return (
+    <>
+      {displayGrade()}
+    </>
+  )
+}
