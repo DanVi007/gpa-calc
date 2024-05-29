@@ -109,7 +109,7 @@ export default function GradesPage() {
     if (scenarioNamesMap) {
       scenarioNamesMap.forEach((scenarioName, scenarioId) => {
         let scenarioButton: React.ReactElement =
-          <button onClick={() => { onClickScenario(scenarioId) }}>
+          <button key={scenarioId} onClick={() => { onClickScenario(scenarioId) }}>
             {scenarioId}
             {scenarioName}
           </button>
@@ -125,16 +125,14 @@ export default function GradesPage() {
     setCurrentScenario(RemoveGradeWithGradeId(currentScenario, grade.Id))
   }
 
-
   function displayGrades(): React.ReactElement[] {
-    let grades: React.ReactElement[] = []
+    let grades: React.ReactElement[] = [];
     if (currentScenario) {
-      currentScenario.Grades.map((grade) => {
-        // grades = [...grades, displayGrade(grade)]
-        grades = [...grades, <SingleGrade key={grade.Id} grade={grade} removeGrade={removeGrade} />]
-      })
+      grades = currentScenario.Grades.map((grade, index) => (
+        <SingleGrade key={grade.Id} grade={grade} removeGrade={removeGrade} />
+      ));
     }
-    return grades
+    return grades;
   }
 
   return (

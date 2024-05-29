@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Grade } from "../models/Grade";
 export default function SingleGrade(
-  { key, grade, removeGrade }: { key: number, grade: Grade, removeGrade: (grade: Grade) => void }
+  { grade, removeGrade }: { grade: Grade, removeGrade: (grade: Grade) => void }
 ) {
 
   const [course, setCourse] = useState<string>(grade.Course)
@@ -54,7 +54,7 @@ export default function SingleGrade(
   function displayGrade(): React.ReactElement {
 
     return (
-      <div className="grade">
+      <div className="grade" id={"grade" + String(grade.Id)}>
         <button type="button" className="close-btn" onClick={() => {
           removeGrade(grade)
         }}>
