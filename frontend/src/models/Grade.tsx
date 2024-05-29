@@ -47,3 +47,14 @@ export function setNewGradePoint(grade: Grade, newNewGradePoint: number | string
   return { ...grade, NewGradePoint: parseGradePointToNumber(newNewGradePoint) }
 }
 
+export function getEmptyGradeWithIdAndSwap(swap: boolean, id: number): Grade {
+  const emptyGrade: Grade = {
+    Id: id,
+    Course: "",
+    Points: "",
+    CurrentGradePoint: '',
+    SwapGrade: swap,
+    NewGradePoint: "",
+  };
+  return emptyGrade
+}

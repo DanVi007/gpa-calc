@@ -1,13 +1,81 @@
-import { useState } from "react";
-import { Grade } from "../models/Grade";
+import { ChangeEvent, useState } from "react";
+import { Grade, setCourse, setCurrentGradePoint, setNewGradePoint, setPoints } from "../models/Grade";
 export default function SingleGrade(
-  { grade, removeGrade }: { grade: Grade, removeGrade: (grade: Grade) => void }
+  {
+    grade,
+    removeGrade,
+    loadGradeToParent,
+  }:
+    {
+      grade: Grade,
+      removeGrade: (grade: Grade) => void,
+      loadGradeToParent: (grade: Grade) => void
+    }
 ) {
 
-  const [course, setCourse] = useState<string>(grade.Course)
-  const [points, setPoints] = useState<string>(String(grade.Points))
-  const [CurrentGradePoint, setCurrentGradePoint] = useState<string>(String(grade.CurrentGradePoint))
-  const [newGradePoint, setNewGradePoint] = useState<string>(String(grade.NewGradePoint))
+  const [course, setLocalCourse] = useState<string>(grade.Course)
+  const [points, setLocalPoints] = useState<string>(String(grade.Points))
+  const [CurrentGradePoint, setLocalCurrentGradePoint] = useState<string>(String(grade.CurrentGradePoint))
+  const [newGradePoint, setLocalNewGradePoint] = useState<string>(String(grade.NewGradePoint))
+
+  const [correctGrade, setCorrectGrade] = useState<Grade>(grade)
+
+  const [valid, setValid] = useState<boolean>(true)
+
+
+  function handleBlurInputs() {
+    if (valid) {
+      loadGradeToParent(correctGrade)
+    }
+  }
+
+  function handleChangeCourse(event: ChangeEvent<HTMLInputElement>) {
+    const userInput = event.target.value
+    setLocalCourse(userInput)
+
+    try {
+      setCorrectGrade(setCourse(correctGrade, userInput))
+    } catch (error) {
+      setValid(false)
+      console.log("user input error in setting course: " + error)
+    }
+  }
+
+  function handleChangePoints(event: ChangeEvent<HTMLInputElement>) {
+    const userInput = event.target.value
+    setLocalPoints(userInput)
+
+    try {
+      setCorrectGrade(setPoints(correctGrade, userInput))
+    } catch (error) {
+      setValid(false)
+      console.log("user input error in setting points: " + error)
+    }
+  }
+
+  function handleChangeCurrentGradePoint(event: ChangeEvent<HTMLInputElement>) {
+    const userInput = event.target.value
+    setLocalCurrentGradePoint(userInput)
+
+    try {
+      setCorrectGrade(setCurrentGradePoint(correctGrade, userInput))
+    } catch (error) {
+      setValid(false)
+      console.log("user input error in setting current grade: " + error)
+    }
+  }
+
+  function handleChangeNewGradePoint(event: ChangeEvent<HTMLInputElement>) {
+    const userInput = event.target.value
+    setLocalNewGradePoint(userInput)
+
+    try {
+      setCorrectGrade(setNewGradePoint(correctGrade, userInput))
+    } catch (error) {
+      setValid(false)
+      console.log("user input error in setting new grade: " + error)
+    }
+  }
 
   function normalGrade(): JSX.Element {
     return (
@@ -16,9 +84,8 @@ export default function SingleGrade(
           type="text"
           placeholder="Karakter"
           value={CurrentGradePoint}
-          onChange={(event) => {
-            setCurrentGradePoint(event.target.value)
-          }}
+          onChange={handleChangeCurrentGradePoint}
+          onBlur={handleBlurInputs}
           className="grade-input"
         />
       </label>
@@ -34,18 +101,16 @@ export default function SingleGrade(
           placeholder="Gammel karakter"
           value={CurrentGradePoint}
           className="old-swap-grade-input"
-          onChange={(event) => {
-            setCurrentGradePoint(event.target.value)
-          }}
+          onChange={handleChangeCurrentGradePoint}
+          onBlur={handleBlurInputs}
         />
         <input
           type="text"
           placeholder="Ny karakter"
           value={newGradePoint}
           className="old-swap-grade-input"
-          onChange={(event) => {
-            setNewGradePoint(event.target.value)
-          }}
+          onChange={handleChangeNewGradePoint}
+          onBlur={handleBlurInputs}
         />
       </label>
     )
@@ -65,11 +130,9 @@ export default function SingleGrade(
             <input
               placeholder="Emnenavn"
               type="text"
-              // value={GetGradeWithId(currentScenario, gradeId)?.Course}
               value={course}
-              onChange={(event) => {
-                setCourse(event.target.value)
-              }}
+              onChange={handleChangeCourse}
+              onBlur={handleBlurInputs}
               className="grade-input"
             />
           </label>
@@ -80,9 +143,8 @@ export default function SingleGrade(
               placeholder="Studiepoeng"
               type="text"
               value={points}
-              onChange={(event) => {
-                setPoints(event.target.value)
-              }}
+              onChange={handleChangePoints}
+              onBlur={handleBlurInputs}
               className="grade-input"
             />
           </label>

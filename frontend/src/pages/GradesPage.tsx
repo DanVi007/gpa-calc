@@ -2,8 +2,8 @@ import "./GradesPage.css";
 import { useEffect, useState } from "react";
 
 import { getAvailableScenarioId, getScenariosIdNameMap, getScenarioWithId, setScenariosIdNameMapToStorage, setScenarioToStorage, updateAvailableScenarioId } from "../utils/Storage";
-import { Grade } from "../models/Grade";
-import { calculateGpa, RemoveGradeWithGradeId, Scenario } from "../models/Scenario";
+import { getEmptyGradeWithIdAndSwap, Grade } from "../models/Grade";
+import { calculateGpa, RemoveGradeWithGradeId, Scenario, UpdateGrade } from "../models/Scenario";
 import { INITIAL_SCENARIO, INITIAL_SCENARIO_NAMES_MAP } from "../utils/Constants";
 import SingleGrade from "../components/SingleGrade";
 
@@ -38,14 +38,7 @@ export default function GradesPage() {
   function addEmptyGrade(swap: boolean) {
     let newId = currentScenario.AvailableGradeId
 
-    const emptyGrade: Grade = {
-      Id: newId,
-      Course: "",
-      Points: "",
-      CurrentGradePoint: '',
-      SwapGrade: swap,
-      NewGradePoint: "",
-    };
+    const emptyGrade: Grade = getEmptyGradeWithIdAndSwap(swap, newId)
 
     setCurrentScenario({
       ...currentScenario,
@@ -121,6 +114,10 @@ export default function GradesPage() {
     return scenarioButtons
   }
 
+  function loadGradeToParent(grade: Grade) {
+    setCurrentScenario(UpdateGrade(currentScenario, grade))
+  }
+
   function removeGrade(grade: Grade) {
     setCurrentScenario(RemoveGradeWithGradeId(currentScenario, grade.Id))
   }
@@ -129,7 +126,7 @@ export default function GradesPage() {
     let grades: React.ReactElement[] = [];
     if (currentScenario) {
       grades = currentScenario.Grades.map((grade, index) => (
-        <SingleGrade key={grade.Id} grade={grade} removeGrade={removeGrade} />
+        <SingleGrade key={grade.Id} grade={grade} removeGrade={removeGrade} loadGradeToParent={loadGradeToParent} />
       ));
     }
     return grades;
