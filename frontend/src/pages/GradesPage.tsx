@@ -11,6 +11,7 @@ export default function GradesPage() {
 
   const [gpa, setGpa] = useState<string>("")
   // NOTE: initial scenario might be wasted if it is retrieved from the localStorage either way
+  // TODO: RESOLVE THE NOTE ABOVE
   const [currentScenario, setCurrentScenario] = useState<Scenario>(INITIAL_SCENARIO)
   const [scenarioNamesMap, setScenarioNamesMap] = useState<Map<number, string>>(INITIAL_SCENARIO_NAMES_MAP)
 
@@ -103,7 +104,6 @@ export default function GradesPage() {
       scenarioNamesMap.forEach((scenarioName, scenarioId) => {
         let scenarioButton: React.ReactElement =
           <button key={scenarioId} onClick={() => { onClickScenario(scenarioId) }}>
-            {scenarioId}
             {scenarioName}
           </button>
 
