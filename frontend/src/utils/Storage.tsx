@@ -80,4 +80,8 @@ export function setScenarioToStorage(scenario: Scenario) {
 
 export function setScenariosIdNameMapToStorage(scenariosNamesMap: Map<number, string>) {
   localStorage.setItem(SCENARIOS_NAMES_KEY, JSON.stringify(Array.from(scenariosNamesMap)))
-} 
+}
+
+export function removeScenarioFromStorage(scenarioId: number) {
+  localStorage.removeItem(String(scenarioId))
+}

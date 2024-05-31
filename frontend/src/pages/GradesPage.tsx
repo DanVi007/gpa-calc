@@ -1,7 +1,9 @@
+// TODO: close button for scenarios 
+// TODO: Refactor scenario to its own page
 import "./GradesPage.css";
 import { useEffect, useState } from "react";
 
-import { getAvailableScenarioId, getScenariosIdNameMap, getScenarioWithId, setScenariosIdNameMapToStorage, setScenarioToStorage, updateAvailableScenarioId } from "../utils/Storage";
+import { getAvailableScenarioId, getScenariosIdNameMap, getScenarioWithId, removeScenarioFromStorage, setScenariosIdNameMapToStorage, setScenarioToStorage, updateAvailableScenarioId } from "../utils/Storage";
 import { getEmptyGradeWithIdAndSwap, Grade } from "../models/Grade";
 import { calculateGpa, RemoveGradeWithGradeId, Scenario, UpdateGrade } from "../models/Scenario";
 import { INITIAL_SCENARIO, INITIAL_SCENARIO_NAMES_MAP } from "../utils/Constants";
@@ -47,6 +49,39 @@ export default function GradesPage() {
       Grades: [...currentScenario.Grades, emptyGrade]
     })
 
+  }
+
+  function getNextKeyInMap(key: any, map: Map<any, any>) {
+    const entries = Array.from(map.keys());
+    const index = entries.indexOf(key);
+    if (index === entries.length - 1 && entries.length > 1) { // last entry 
+      return entries[index - 1]
+    } else if (index !== -1 && index < entries.length - 1) { // not last 
+      return entries[index + 1]; // Return the next key
+    }
+    return null; // Return null if there is no next key
+  }
+
+
+  function removeScenarioWithId(scenarioId: number) {
+    // if scenario to remove is the current scenario
+    if (scenarioId === currentScenario.Id) {
+      // get next scenario from scenarioId
+      const replacementKey: number | null = getNextKeyInMap(scenarioId, scenarioNamesMap)
+      if (replacementKey !== null) {
+        setCurrentScenario(getScenarioWithId(replacementKey))
+      } else {
+        setCurrentScenario(INITIAL_SCENARIO)
+      }
+    }
+
+    // remove from map
+    const newMap: Map<number, string> = new Map<number, string>(scenarioNamesMap)
+    newMap.delete(scenarioId)
+    setScenarioNamesMap(newMap)
+
+    // remove from storage
+    removeScenarioFromStorage(scenarioId)
   }
 
   /**
