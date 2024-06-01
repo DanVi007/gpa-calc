@@ -1,5 +1,5 @@
-// TODO: close button for scenarios 
 // TODO: Refactor scenario to its own page
+// TODO: REMOVE ID FROM DISPLAYED SCENARIOS ONLY FOR EASY DEBUGGING
 import "./GradesPage.css";
 import { useEffect, useState } from "react";
 
@@ -138,9 +138,14 @@ export default function GradesPage() {
     if (scenarioNamesMap) {
       scenarioNamesMap.forEach((scenarioName, scenarioId) => {
         let scenarioButton: React.ReactElement =
-          <button key={scenarioId} onClick={() => { onClickScenario(scenarioId) }}>
-            {scenarioName}
-          </button>
+          <span>
+            <button key={scenarioId} onClick={() => { onClickScenario(scenarioId) }}>
+              {scenarioName}{scenarioId}
+            </button>
+            <button key={`remove${scenarioId}`} onClick={() => { removeScenarioWithId(scenarioId) }}>
+              X
+            </button>
+          </span >
 
         scenarioButtons = [...scenarioButtons, scenarioButton]
 
@@ -188,7 +193,7 @@ export default function GradesPage() {
         <button type="button" id="add-grade-btn" className="button-bar-btn" onClick={() => addEmptyGrade(false)}>
           +
         </button>
-        <span> Current scenario: {currentScenario.Name}</span>
+        <span> Current scenario: {currentScenario.Name}{currentScenario.Id}</span>
         <button type="button" id="add-scenario-btn" className="button-bar-btn" onClick={addNewScenario}>+</button>
       </div>
       <div>
