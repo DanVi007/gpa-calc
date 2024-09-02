@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import { ScenariosProvider } from "./context/ScenarioContext";
 import "./index.css";
 import MainPage from "./pages/MainPage";
 
@@ -9,7 +10,9 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <div className="App">
-      <MainPage />
+      <ScenariosProvider>
+        <MainPage />
+      </ScenariosProvider>
     </div>
   </React.StrictMode>,
 );

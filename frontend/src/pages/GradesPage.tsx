@@ -8,8 +8,10 @@ import { getEmptyGradeWithIdAndSwap, Grade } from "../models/Grade";
 import { calculateGpa, RemoveGradeWithGradeId, Scenario, UpdateGrade } from "../models/Scenario";
 import { INITIAL_SCENARIO, INITIAL_SCENARIO_NAMES_MAP } from "../utils/Constants";
 import SingleGrade from "../components/SingleGrade";
+import { useScenariosContext } from "../context/ScenarioContext";
 
 export default function GradesPage() {
+  const { scenarios, dispatch } = useScenariosContext()
 
   const [gpa, setGpa] = useState<string>("")
   // NOTE: initial scenario might be wasted if it is retrieved from the localStorage either way
